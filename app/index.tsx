@@ -5,6 +5,7 @@ import { Splash } from "./pages/Splash"
 
 import "@nyaacinth/webview-nativefy.css"
 import "@picocss/pico/css/pico.pumpkin.min.css"
+import "virtual:uno.css"
 
 render(
     () => (
