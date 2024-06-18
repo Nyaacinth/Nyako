@@ -1,11 +1,18 @@
 import init, { FormatType, Numbat, setup_panic_hook } from "@nyaacinth/numbat-wasm-precompiled"
+import numbatWasmUrl from "@nyaacinth/numbat-wasm-precompiled/numbat_wasm_bg.wasm?url"
+import jQuery from "jquery"
+import initTerminal from "jquery.terminal"
+import "jquery.terminal/css/jquery.terminal.min.css"
+
+initTerminal(window, jQuery)
+
 import type { Component } from "solid-js"
 import { onMount } from "solid-js"
 
 let numbat: Numbat
 
 function create_numbat_instance() {
-    return Numbat.new(true, true, FormatType.Html)
+    return Numbat.new(true, true, FormatType.JqueryTerminal)
 }
 
 let combined_input = ""
@@ -21,7 +28,6 @@ function interpret(input: string) {
         output = ""
     } else if (input_trimmed == "reset") {
         numbat = create_numbat_instance()
-        numbat.interpret("use units::currencies")
         combined_input = ""
     } else if (input_trimmed == "list" || input_trimmed == "ls") {
         output = numbat.print_environment()
@@ -53,49 +59,42 @@ function interpret(input: string) {
     return output
 }
 
-function setup(input: HTMLInputElement, div: HTMLDivElement) /* TODO */ {
-    input.focus()
-    input.value = combined_input
-    input.addEventListener("keydown", (event) => {
-        if (event.key === "Enter") {
-            div.innerHTML = interpret(input.value) ?? ""
-            input.value = ""
-        }
+function setup(div: HTMLDivElement) /* TODO */ {
+    jQuery(($) => {
+        $(div).terminal(interpret, {
+            greetings: "",
+            name: "terminal",
+            prompt: "[[;;;prompt]>>> ]",
+            checkArity: false,
+            historySize: 200,
+            historyFilter(line) {
+                return line.trim() !== ""
+            },
+            completion(inp, cb) {
+                cb(numbat.get_completions_for(inp))
+            }
+        })
     })
 }
 
-async function numbatMain(input: HTMLInputElement, div: HTMLDivElement) {
-    await init()
+async function numbatMain(div: HTMLDivElement) {
+    await init(numbatWasmUrl)
 
     setup_panic_hook()
 
     numbat = create_numbat_instance()
     combined_input = ""
 
-    setup(input, div)
+    setup(div)
 }
 
 export const NumbatTerminal: Component = () => {
     let container: HTMLDivElement
-    let input: HTMLInputElement
 
     onMount(() => {
-        if (input && container) numbatMain(input, container)
+        if (!container) return
+        numbatMain(container)
     })
 
-    return (
-        /* Material Card, Tailwind Classes */
-        <div class="w-min m-4 p-4 bg-white rounded-lg shadow border border-gray-3">
-            <input
-                type="text"
-                class="w-96 p-2 m-0 rounded-t-lg border border-b-0.5 border-solid border-gray-3 text-lg"
-                placeholder="Enter Command..."
-                ref={input!}
-            />
-            <div
-                class="w-96 h-76 overflow-scroll bg-black bg-opacity-3 text-wrap p-2 m-0 rounded-b-lg border border-t-0.5 border-solid border-gray-3 text-lg"
-                ref={container!}
-            />
-        </div>
-    )
+    return <div class="terminal w-full h-full" ref={container!} />
 }

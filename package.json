@@ -16,6 +16,8 @@
     "@solidjs/router": "^0.13.5",
     "@tauri-apps/api": "^1.5.6",
     "@unocss/reset": "^0.61.0",
+    "jquery": "^3.7.1",
+    "jquery.terminal": "^2.42.0",
     "solid-js": "^1.8.17"
   },
   "devDependencies": {

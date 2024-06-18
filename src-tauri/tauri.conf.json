@@ -58,12 +58,10 @@
         "windows": [
             {
                 "fullscreen": false,
-                "height": 600,
+                "height": 681,
                 "resizable": true,
                 "title": "Nyako",
-                "width": 480,
-                "titleBarStyle": "Overlay",
-                "hiddenTitle": true
+                "width": 960
             }
         ]
     }
