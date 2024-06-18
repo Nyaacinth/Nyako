@@ -4,7 +4,7 @@ import { render } from "solid-js/web"
 import { Splash } from "./pages/Splash"
 
 import "@nyaacinth/webview-nativefy.css"
-import "@picocss/pico/css/pico.pumpkin.min.css"
+import "@unocss/reset/tailwind-compat.css"
 import "virtual:uno.css"
 
 render(
