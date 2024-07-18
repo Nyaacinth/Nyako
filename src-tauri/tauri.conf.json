@@ -7,12 +7,12 @@
         "distDir": "../dist"
     },
     "package": {
-        "productName": "template-name-please-replace",
+        "productName": "Nyako",
         "version": "../package.json"
     },
     "tauri": {
         "allowlist": {
-            "all": false
+            "all": true
         },
         "bundle": {
             "active": true,
@@ -29,7 +29,7 @@
                 "icons/icon.icns",
                 "icons/icon.ico"
             ],
-            "identifier": "org.example.template-name-please-replace",
+            "identifier": "work.nyaacinth.nyako",
             "longDescription": "",
             "macOS": {
                 "entitlements": null,
@@ -58,7 +58,7 @@
                 "fullscreen": false,
                 "height": 600,
                 "resizable": true,
-                "title": "template-name-please-replace",
+                "title": "Nyako",
                 "width": 800
             }
         ]
