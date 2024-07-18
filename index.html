@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script type="module" src="./app/main.ts"></script>
+        <title>template-name-please-replace</title>
+    </head>
+    <body>
+        <div id="root"></div>
+    </body>
+    <style>
+        /** @see https://github.com/Nyaacinth/webview-nativefy.css/raw/main/webview-nativefy.css */
+
+        /* Disable bounces and overscroll effects, also expands body */
+        html {
+            overscroll-behavior: none;
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+        }
+        @supports (height: 100dvh) and (width: 100dvw) {
+            html {
+                width: 100dvw;
+                height: 100dvh;
+            }
+        }
+        body {
+            overflow: auto;
+            width: 100%;
+            height: 100%;
+        }
+        #root {
+            height: 100%;
+        }
+
+        /* Disable text selection and I-beam on elements except editable ones */
+        html {
+            -webkit-user-select: none;
+            user-select: none;
+            cursor: default;
+        }
+        input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+        textarea,
+        [contenteditable] {
+            -webkit-user-select: text;
+            user-select: text;
+            cursor: text;
+        }
+    </style>
+</html>
